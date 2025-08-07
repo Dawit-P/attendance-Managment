@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ student.full_name }} - Details</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f4f6fb;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 500px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            padding: 32px;
+        }
+        .student-photo {
+            height: 100px;
+            width: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid #4f8cff;
+            margin-bottom: 18px;
+        }
+        h2 {
+            color: #2d3a4b;
+            margin-bottom: 12px;
+        }
+        .info {
+            font-size: 16px;
+            color: #444;
+            margin-bottom: 8px;
+        }
+        .back-link {
+            display: inline-block;
+            margin-top: 18px;
+            color: #4f8cff;
+            text-decoration: none;
+            font-size: 15px;
+        }
+        .back-link:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img class="student-photo" src="{{ student.photo.url }}" alt="{{ student.full_name }}" />
+        <h2>{{ student.full_name }}</h2>
+        <div class="info"><strong>Group:</strong> {{ student.group }}</div>
+        <div class="info"><strong>Department:</strong> {{ student.department }}</div>
+        <div class="info"><strong>Email:</strong> {{ student.email }}</div>
+        <div class="info"><strong>Phone:</strong> {{ student.phone }}</div>
+        <div class="info"><strong>Sex:</strong> {{ student.sex }}</div>
+        <a class="back-link" href="{% url 'home' %}">&larr; Back to List</a>
+    </div>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard - Attendance Overview</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: #f4f6fb;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+            padding: 32px;
+        }
+        h2 {
+            color: #2d3a4b;
+            margin-bottom: 24px;
+        }
+        .summary {
+            display: flex;
+            gap: 32px;
+            margin-bottom: 32px;
+        }
+        .summary-card {
+            background: #f9fafc;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            padding: 24px;
+            flex: 1;
+            text-align: center;
+        }
+        .summary-card h3 {
+            margin: 0 0 8px 0;
+            color: #4f8cff;
+            font-size: 22px;
+        }
+        .summary-card p {
+            font-size: 18px;
+            color: #2d3a4b;
+            margin: 0;
+        }
+        .chart-section {
+            margin-top: 32px;
+        }
+        .chart-container {
+            background: #f9fafc;
+            border-radius: 8px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            padding: 24px;
+        }
+    </style>
+</head>
+<body>
+    {% load static %}
+    <div class="container">
+        <h2>Admin Dashboard - Attendance Overview</h2>
+        <div class="summary">
+            <div class="summary-card">
+                <h3>Total Students</h3>
+                <p>{{ total_students }}</p>
+            </div>
+            <div class="summary-card">
+                <h3>Total Attendance Records</h3>
+                <p>{{ total_attendance }}</p>
+            </div>
+            <div class="summary-card">
+                <h3>Average Days Present</h3>
+                <p>{{ avg_days_present }}</p>
+            </div>
+        </div>
+        <div class="chart-section">
+            <div class="chart-container">
+                <h3>Days Present Per Student</h3>
+                <canvas id="attendanceChart" height="120"></canvas>
+            </div>
+        </div>
+    </div>
+    <script>
+        const chartLabels = JSON.parse(document.getElementById('chart-labels').textContent);
+        const chartData = JSON.parse(document.getElementById('chart-data').textContent);
+        const data = {
+            labels: chartLabels,
+            datasets: [{
+                label: 'Days Present',
+                data: chartData,
+                backgroundColor: '#4f8cff',
+                borderRadius: 6,
+            }]
+        };
+        const config = {
+            type: 'bar',
+            data: data,
+            options: {
+                plugins: {
+                    legend: { display: false }
+                },
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        };
+        new Chart(document.getElementById('attendanceChart'), config);
+    </script>
+    {{ chart_labels|json_script:"chart-labels" }}
+    {{ chart_data|json_script:"chart-data" }}
+    </script>
+</body>
+</html>
